@@ -33,7 +33,7 @@ public class YandexTranslateImpl implements YandexTranslate {
             connection.connect();
 
             if (HttpURLConnection.HTTP_OK == connection.getResponseCode()) {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
                 String tmp;
                 while ((tmp = reader.readLine()) != null) {
                     strBuilder.append(tmp);
