@@ -16,6 +16,7 @@ public class YandexTranslateImpl implements YandexTranslate {
     public String translateEnRu(String text) {
         String request = HOST + "?key=" + API_KEY + "&text=" + text  + "&lang=en-ru";
         HttpURLConnection connection = null;
+        StringBuilder strBuilder = new StringBuilder();
         try {
             connection = (HttpURLConnection) new URL(request).openConnection();
             connection.setRequestMethod("GET");
@@ -23,25 +24,22 @@ public class YandexTranslateImpl implements YandexTranslate {
             connection.setReadTimeout(200);
             connection.connect();
 
-            StringBuilder strBuilder = new StringBuilder();
-
             if (HttpURLConnection.HTTP_OK == connection.getResponseCode()) {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 String tmp;
                 while ((tmp = reader.readLine()) != null) {
                     strBuilder.append(tmp);
-                    strBuilder.append("\n");
                 }
-                System.out.println(strBuilder.toString());
+
             } else {
-                System.out.println(connection.getResponseCode());
+                return String.valueOf(connection.getResponseCode());
             }
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             connection.disconnect();
         }
-        return null;
+        return strBuilder.toString();
     }
 
     public String translateAny(String text) {
