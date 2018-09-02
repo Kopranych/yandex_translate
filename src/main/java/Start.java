@@ -1,15 +1,22 @@
-
 import api.yandex.translate.YandexTranslate;
 import api.yandex.translate.impl.YandexTranslateImpl;
-import api.yandex.translate.model.JSONResponse;
-import tools.JsonTools;
+
+import java.util.Scanner;
+
 
 public class Start {
     public static void main(String[] args) {
-        JsonTools jsonTools = new JsonTools();
         YandexTranslate translate = new YandexTranslateImpl();
-        JSONResponse response = jsonTools.jsonParseYndexResponse(translate.translateEnRu("language"));
-        System.out.println(response.getText());
+        System.out.println("Введите слово которое необходимо перевести\n" +
+                "для завершения программы введите \"stop\" для завершения");
+        String text = new String();
+        String translateText;
+        while(!text.equals("stop")){
+            Scanner scanner = new Scanner(System.in);
+            text = scanner.nextLine();
+            translateText = translate.translateEnRu(text);
+            System.out.println(translateText);
+        }
 
     }
 }
